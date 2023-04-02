@@ -1,0 +1,8 @@
+prefix=/home/prongs/catkin_ws/devel
+
+Name: turtlebot_ddpg
+Description: Description of turtlebot_ddpg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: gazebo_msgs

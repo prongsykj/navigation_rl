@@ -1,0 +1,8 @@
+prefix=/home/prongs/catkin_ws/devel
+
+Name: single_ladar_and_camera_fusion
+Description: Description of single_ladar_and_camera_fusion
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

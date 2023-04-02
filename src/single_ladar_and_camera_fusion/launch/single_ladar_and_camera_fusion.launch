@@ -1,0 +1,7 @@
+<launch>
+
+<node pkg="single_ladar_and_camera_fusion" type="single_ladar_and_camera_fusion_node" name="single_ladar_and_camera_fusion_node" output="screen">
+    <param name="freq" value="1.0"/>
+</node>
+
+</launch>

@@ -1,0 +1,30 @@
+<launch>
+<arg name="resolution" default="480p"/>
+<arg name="lidar_type" value="$(env LIDAR_TYPE)"/>
+
+<!-- 启动激光雷达驱动包 -->
+<group if="$(eval arg('lidar_type') == 'XAS')">
+   	<include file="$(find rplidar_ros)/launch/rplidar_filtered.launch" />
+</group>
+
+<group if="$(eval arg('lidar_type') == 'XT1')"> 
+	<include file="$(find sc_mini)/launch/start_withfilter.launch"/>
+</group>
+<group if="$(eval arg('lidar_type') == 'YT1')"> 
+	<include file="$(find sc_mini)/launch/start_withfilter.launch"/>
+</group>
+<node pkg="laser_filters" type="scan_to_scan_filter_chain" output="log" name="laser_filter">
+		<rosparam command="load" file="$(find xtark_driver)/config/xtark_laserfilter.yaml"/>
+		<remap from="/scan" to="/scan_raw"/>
+		<remap from="/scan_filtered" to="/scan"/>
+</node>
+
+
+<!-- 启动USB摄像头驱动包 -->
+<include file="$(find xtark_driver)/launch/xtark_camera.launch">
+		<arg name="resolution" value="$(arg resolution)"/>
+</include>
+
+<node pkg="tf" type="static_transform_publisher" name="base_foot_print_to_laser" args="0.10 0 0.1 0 0 0 base_footprint laser 40"/>
+<node pkg="tf" type="static_transform_publisher" name="base_footprint_to_camera" args="0.10 0 0.10 1.57 3.14 1.57 base_footprint camera_link 40"/>
+</launch>
